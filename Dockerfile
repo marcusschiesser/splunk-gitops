@@ -20,9 +20,9 @@ RUN create-tarballs.sh
 
 FROM splunk/splunk:${SPLUNK_VERSION}
 # Apps that will be generated and added to the Splunk instance
-ENV SPLUNK_APPS_URL="SPLUNK_APPS_URL=/tmp/apps/splunk_root_config.tgz,/tmp/apps/my_app.tgz"
+ENV SPLUNK_APPS_URL="/tmp/apps/splunk_root_config.tgz,/tmp/apps/my_app.tgz"
 # Use this version if you add the splunkbase apps
-# ENV SPLUNK_APPS_URL="SPLUNK_APPS_URL=/tmp/apps/splunk_root_config.tgz,/tmp/apps/my_app.tgz,/tmp/apps/Splunk_SA_Scientific_Python_linux_x86_64.tgz,/tmp/apps/Splunk_ML_Toolkit.tgz,/tmp/apps/mltk-container.tgz"
+# ENV SPLUNK_APPS_URL="/tmp/apps/splunk_root_config.tgz,/tmp/apps/my_app.tgz,/tmp/apps/Splunk_SA_Scientific_Python_linux_x86_64.tgz,/tmp/apps/Splunk_ML_Toolkit.tgz,/tmp/apps/mltk-container.tgz"
 USER ansible
 COPY --from=builder /tmp/apps /tmp/apps
 ENTRYPOINT ["/sbin/entrypoint.sh"]
