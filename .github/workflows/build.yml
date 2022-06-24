@@ -48,6 +48,7 @@ jobs:
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.version }}
           labels: ${{ steps.meta.outputs.labels }}
-          secrets: |
-            "SPLUNKBASE_USERNAME=${{ secrets.SPLUNKBASE_USERNAME }}"
-            "SPLUNKBASE_PASSWORD=${{ secrets.SPLUNKBASE_PASSWORD }}"
+          build-args: |
+            # "GITHUB_PAT=${{ secrets.PERSONAL_ACCESS_TOKEN }}"
+            # "SPLUNKBASE_USERNAME=${{ secrets.SPLUNKBASE_USERNAME }}"
+            # "SPLUNKBASE_PASSWORD=${{ secrets.SPLUNKBASE_PASSWORD }}"

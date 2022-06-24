@@ -13,11 +13,11 @@ The repository is the result of [my discussions about how to use Gitops with Spl
 
 Clone the repository, then you can configure your Splunk installation by editing these files:
 
-1. The system configuration is stored in the [`config/system`](config/system/) folder as a `default.yml` file according to the [Splunk's Ansible spec](https://splunk.github.io/splunk-ansible/advanced/default.yml.spec.html).
-2. External apps can be retrieved at build time from Splunkbase - currently, you can configure them in the [`Dockerfile`](Dockerfile).
+1. The system configuration is stored in its own app as considered best practice for Splunk. This example is using my [splunk-root-config](https://github.com/marcusschiesser/splunk-root-config) app.
+2. External apps can be retrieved at build time from Github Releases or Splunkbase - you can define the dependencies to download directly in the [`Dockerfile`](Dockerfile).
 3. Local apps are stored in the [`apps`](apps) folder. Copy apps that you want to include in your installation here - without their configuration (will be added in the next step).
-4. The configuration of local and external apps can be overwritten with app folders in the [`config/apps`](config/apps) directory. You can configure local apps and apps from Splunkbase there.
-5. The `APP` and `SPLUNK_APPS_URL` variables in the `Dockerfile` must reference your local and external apps. Configure them accordingly.
+4. The configuration of local and external apps can be overwritten with app folders in the [`config/apps`](config/apps) directory. You can configure local apps and external apps there.
+5. The `SPLUNK_APPS_URL` variables in the `Dockerfile` must reference your local and external apps. Configure it accordingly.
 
 > **Note**: Doing so, we nicely separate the different concerns: apps and their configuration and the different origins of an app (local or external).
 
@@ -27,13 +27,13 @@ According to the configuration in the previous step, the build process is genera
 
 ### Local Build
 
-If you're not using external apps from Splunkbase, you can build the image locally with this simple command:
+If you're not using external apps from Splunkbase (as in the example Dockerfile), you can build the image locally with this simple command:
 
 ```
 docker build -t splunk-gitops .
 ```
 
-In case you want to include external apps from Splunkbase (like in the example), then you can do the build like this:
+In case you want to include external apps from Splunkbase (comment out the appropriate sections in the Dockerfile), then you can do the build like this:
 
 ```
 export SPLUNKBASE_USERNAME=<YOUR SPLUNK BASE USERNAME>
@@ -87,9 +87,4 @@ Welcome to Gitops! :smile:
 
 ## TODOs
 
-- Allow to download external apps from other sources, e.g. Github Releases
-- Add a build variable to configure external apps that should be downloaded  
-- Automatically generate `APPS` and `SPLUNK_APPS_URL` by scanning the directory structure
-- Add more build variables so it is not necessary to change the `Dockerfile` directly
-- Convert system configuration files automatically to `default.yml` YAML
 - Add hook after ansible has finished the configuration to do after system configuration tasks, e.g. adding users
