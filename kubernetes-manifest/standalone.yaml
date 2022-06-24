@@ -10,7 +10,7 @@ metadata:
   name: test
 spec:
   replicas: 1
-  image: <ADD YOUR DOCKER IMAGE>
+  image: ghcr.io/marcusschiesser/splunk-gitops:main
   imagePullPolicy: Always
   etcVolumeStorageConfig:
     ephemeralStorage: true
